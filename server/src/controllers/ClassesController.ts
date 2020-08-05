@@ -37,10 +37,10 @@ export default class ClassesController {
       .join('users', 'classes.user_id', '=', 'users.id')
       .select(['classes.*', 'users.*']);
 
-    response.json(classes);
+    return response.json(classes);
   }
 
-  async create(request: Request, response: Response): Promise<void> {
+  async create(request: Request, response: Response) {
     const {
       name,
       avatar,
