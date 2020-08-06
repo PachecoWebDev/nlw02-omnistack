@@ -76,7 +76,7 @@ export const Footer = styled.div`
     display: block;
   }
 
-  button {
+  a {
     width: 20rem;
     height: 5.6rem;
     background: var(--color-secundary);
@@ -89,6 +89,7 @@ export const Footer = styled.div`
     align-items: center;
     justify-content: space-evenly;
     transition: 0.2s;
+    text-decoration: none;
 
     &:hover {
       background: var(--color-secundary-dark);

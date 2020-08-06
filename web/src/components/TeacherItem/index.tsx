@@ -1,43 +1,56 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import whatsappIcon from '../../assets/images/icons/whatsapp.svg';
 
 import { Container, Header, Footer } from './styles';
+import api from '../../services/api';
 
-const TeacherItem: React.FC = () => {
+export interface Teacher {
+  id: number;
+  avatar: string;
+  bio: string;
+  cost: number;
+  name: string;
+  subject: string;
+  whatsapp: string;
+}
+interface TeacherItemProps {
+  teacher: Teacher;
+}
+
+const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
+  const createNewConecction = useCallback(() => {
+    api.post('connections', {
+      user_id: teacher.id,
+    });
+  }, [teacher]);
   return (
     <Container>
       <article>
         <Header>
-          <img
-            src="https://avatars1.githubusercontent.com/u/12235370?s=460&u=1e4d49d385dbf5a15cc000377f8757a39822c554&v=4"
-            alt="Anderson Pacheco"
-          />
+          <img src={teacher.avatar} alt={teacher.name} />
           <div>
-            <strong>Anderson Pacheco</strong>
-            <span>Química</span>
+            <strong>{teacher.name}</strong>
+            <span>{teacher.subject}</span>
           </div>
         </Header>
 
-        <p>
-          Entusiata das melhores tecnologias de química avançada.
-          <br />
-          <br />
-          Apaixonado por explodir coisas em laboratório e por mduar a vida das
-          pessoas através de esperiências. Mais de 200.00 pessoas já passaram
-          por uma das minhas explosões.
-        </p>
+        <p>{teacher.bio}</p>
 
         <Footer>
           <p>
             Preço/hora
-            <strong>R$ 100,00</strong>
+            <strong>R$ {teacher.cost}</strong>
           </p>
 
-          <button type="button">
+          <a
+            onClick={createNewConecction}
+            href={`https://wa.me/${teacher.whatsapp}`}
+            target="_blank"
+          >
             <img src={whatsappIcon} alt="Whatsapp" />
             Entrar em contato
-          </button>
+          </a>
         </Footer>
       </article>
     </Container>
